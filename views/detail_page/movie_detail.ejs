@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChillPick | Movie Detail</title>
+  <!-- Single Bootstrap 5 CSS import -->
+   <!-- Google Font: Poppins -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../../css/app.css">
+  <link rel="stylesheet" href="../../css/detail_page/movie_detail.css">
+  <script>
+    const currentUser = <%- JSON.stringify(currentUser || null) %>;
+  </script>
+</head>
+
+  <body data-movie-id="<%= movie.id || movie.tmdbId %>" >
+    <%- include('../partials/header') %>
+
+    <main class="container my-5">
+      <!-- Media detail section here (unchanged) -->
+         <!--Media Detail Section-->
+
+            <section class="mb-5" >
+                <div class="row">
+                    <!--Poster-->
+                    <div class="col-md-4 text center">
+                       <div class="poster-wrapper" data-history-id="<%= movie.id %>" data-history-type="movie">
+                         <img src="<%= movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : '/images/default-movie.jpg' %>" alt="<%= movie.title %>" class="img-fluid mb-3" style="max-height: 500px;">
+                         <span class="completed-badge"><i class="bi bi-check-circle-fill"></i> Watched</span>
+                         <span class="watchlist-badge"><i class="bi bi-bookmark-check-fill"></i> In Watchlist</span>
+                       </div>
+                    </div>
+
+                     <!--Synopsis-->
+                    <div class="col-md-8">
+                        <h1 class="display-5 fw-bload mb-3"><%= movie.title %></h1>
+
+                        <div class="mb-4">
+                           <span class="badge bg-secondary"><i class="bi bi-film"></i> Movie</span>
+                           <% if (movie.runtime) { %><span class="badge bg-secondary ms-1"><%= movie.runtime %> mins</span><% } %>
+                           <span class="badge bg-secondary"><i class="bi bi-calendar3"></i>  Release Date: <%= movie.release_date %></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6 class="d-inline me-2">Genres:</h6>
+                             <% movie.genres.forEach(g => { %><span class="badge text-dark ms-1"><%=g.name %></span><% }); %>
+                        </div>
+                       
+                        <div class="mb-4">
+                            <h5>Synopsis</h5>
+                            <p class="lead" style="font-size: 15px;"><%= movie.overview %></p>
+                        </div>
+
+                          <!--Rate-->
+                        <div class="mb-4">
+                            <h5 class="d-inline me-2" style="font-size: 18px;">Rate: <%= movie.vote_average.toFixed(1) %> / 10</h5>    
+                        </div>
+
+                         <!--button for watchlist & mark view-->
+                         <div class="row mt-4">
+                            <div class="col-lg-3">
+                            <button class="btn btn-outline-primary" id="btnWatchlist"><i class="bi bi-plus-lg"></i> Add to Watchlist</button>
+                            </div>
+                            <div class="col-lg-5">
+                            <% if (movie.watchProviders && (movie.watchProviders.flatrate.length || movie.watchProviders.rent.length || movie.watchProviders.buy.length)) { %>
+                              <a href="<%= movie.watchProviders.link %>" target="_blank" rel="noopener" class="btn" id="btnPlay">
+                                <i class="bi bi-play-circle"></i> Where to Watch
+                              </a>
+                              <div class="watch-provider-logos mt-2">
+                                <% const providers = [...movie.watchProviders.flatrate, ...movie.watchProviders.rent, ...movie.watchProviders.buy]; %>
+                                <% const seen = new Set(); %>
+                                <% providers.forEach(function(p) { %>
+                                  <% if (!seen.has(p.provider_id)) { %>
+                                    <% seen.add(p.provider_id); %>
+                                    <img src="https://image.tmdb.org/t/p/w45<%= p.logo_path %>" alt="<%= p.provider_name %>" title="<%= p.provider_name %>" class="provider-logo">
+                                  <% } %>
+                                <% }); %>
+                              </div>
+                              <small class="text-muted d-block mt-1">Streaming availability by JustWatch</small>
+                            <% } else { %>
+                              <button class="btn btn-outline-secondary" disabled>Not currently available to stream</button>
+                            <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+              <!-- Trailer Section -->
+<section class="mb-5 details-section">
+    <h3 class="mb-4"><i class="bi bi-play-circle-fill"></i> Trailer</h3>
+    <div class="trailer-container justify-content-center" style="width: 100%; max-width: 800px; margin: auto;">
+        <!-- Horizontal Movie Poster (Reduced Height) -->
+        <div class="position-relative" style="height: 335px; overflow: hidden; border-radius: 8px;">
+            <img src="<%= movie.poster_path ? 'https://image.tmdb.org/t/p/w780' + movie.poster_path : '/images/default-movie.jpg' %>"
+                 alt="<%= movie.title %>"
+                 class="img-fluid w-100 h-100"
+                 style="object-fit: cover;">
+           
+            <% if (movie.trailerKey) { %>
+                <!-- Play Button Overlay -->
+                <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 2;">
+                    <button onclick="playTrailer()" class="btn btn-danger btn-lg rounded-circle p-3">
+                        <i class="bi bi-play-fill fs-4"></i>
+                    </button>
+                </div>
+            <% } %>
+        </div>
+
+        <!-- Hidden Trailer Iframe -->
+        <% if (movie.trailerKey) { %>
+            <div id="trailer-iframe-container" class="mt-3" style="display: none; position: relative; padding-top: 56.25%;">
+                <iframe id="trailer-iframe"
+                        src=""
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;">
+                </iframe>
+            </div>
+           
+            <script>
+                function playTrailer() {
+                    const iframeContainer = document.getElementById('trailer-iframe-container');
+                    const iframe = document.getElementById('trailer-iframe');
+                    iframe.src = `https://www.youtube.com/embed/<%= movie.trailerKey %>?autoplay=1&rel=0&modestbranding=1`;
+                    iframeContainer.style.display = 'block';
+                    iframeContainer.scrollIntoView({ behavior: 'smooth' });
+                }
+            </script>
+        <% } %>
+    </div>
+</section>
+
+
+            <!--Recommendations-->
+<section class="mb-5">
+  <h3 class="mb-4">You May Also Like</h3>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    <% if (recommendations && recommendations.length > 0) { %>
+      <% recommendations.forEach(movie => { %>
+        <div class="col">
+          <div class="card h-100" data-history-id="<%= movie.id %>" data-history-type="movie">
+            <a href="/movie_detail/<%= movie.id %>">
+              <div class="poster-wrapper">
+                <img src="<%= movie.image %>" class="card-img-top" alt="<%= movie.title %>" style="height: 300px; object-fit: cover;">
+                <span class="completed-badge"><i class="bi bi-check-circle-fill"></i> Watched</span>
+                <span class="watchlist-badge"><i class="bi bi-bookmark-check-fill"></i> In Watchlist</span>
+              </div>
+            </a>
+            <div class="card-body">
+              <h5 class="card-title"><%= movie.title %></h5>
+              <p class="card-text text-muted">
+                <%= movie.year %> • <%= movie.genres %>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <div class="col-12">
+        <div class="alert alert-info">No recommendations available for this movie.</div>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+
+      <!-- Review Section -->
+      <section class="details-section">
+        <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+          <h3><i class="bi bi-chat-left-dots"></i> User Reviews</h3>
+<% if (currentUser) { %>
+  <button class="btn btn-warning" id="writeReviewBtn">Write a Review</button>
+<% } else { %>
+  <p>You must log in to rate this item.</p>
+<% } %>
+        </div>
+
+        <!-- Review Form -->
+        <div id="reviewForm" class="card mb-4 p-3 border shadow-sm d-none">
+          <h5>Write Your Review</h5>
+          <div class="mb-2">
+            <div id="ratingInput">
+              <i class="bi bi-star-fill" data-value="1"></i>
+              <i class="bi bi-star-fill" data-value="2"></i>
+              <i class="bi bi-star-fill" data-value="3"></i>
+              <i class="bi bi-star-fill" data-value="4"></i>
+              <i class="bi bi-star-fill" data-value="5"></i>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="confirmRatingCheck">
+              <label class="form-check-label" for="confirmRatingCheck"> Contains Spoilers</label>
+            </div>
+          </div>
+          <div class="mb-2">
+            <textarea class="form-control" rows="3" placeholder="Write your review..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-warning">Submit Review</button>
+        </div>
+
+        <!-- Reviews Container -->
+        <div id="reviewsContainer"></div>
+
+        <!-- Load More -->
+        <div class="text-center mt-4">
+          <button class="btn btn-warning load-more-reviews-btn">
+            Load More Reviews
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script src="../../js/history-badges.js"></script>
+    <script src="../../js/detail_page/movie_detail.js"></script>
+    <script src="../../js/watchlist-handler.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.ChillPickHistoryBadges) {
+          window.ChillPickHistoryBadges.applyAllBadges("[data-history-id]");
+        }
+      });
+    </script>
+    <%- include('../partials/footer') %>
+  </body>
+</html>

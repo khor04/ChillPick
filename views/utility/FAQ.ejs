@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ | ChillPick</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/app.css" />
+    <link rel="stylesheet" href="../../css/utility/faq.css" />
+  </head>
+
+  <body>
+    <%- include('../partials/header') %>
+
+    <main class="container py-5">
+      <h2>Frequently Asked Questions (FAQs)</h2>
+
+      <section class="faq-section">
+        <div class="faq-item">
+          <div class="question-container">
+            Q: What is the Entertainment Recommendation System?
+          </div>
+          <div class="answer-container">
+            A: It's a platform that helps users discover movies and books based
+            on their preferences, top charts, and personalized recommendations.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="question-container">Q: Is this service free to use?</div>
+          <div class="answer-container">
+            A: Yes, our platform is completely free for all users.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="question-container">
+            Q: How does the recommendation system work?
+          </div>
+          <div class="answer-container">
+            A: It suggests content based on your interactions such as add to
+            watchlist and searching trends.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="question-container">
+            Q: The website isn't loading properly. What should I do?
+          </div>
+          <div class="answer-container">
+            A: Try clearing your browser cache or using a different browser. If
+            the issue persists, contact our support team.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="question-container">
+            Q: How do I report a bug or issue?
+          </div>
+          <div class="answer-container">
+            A: Email us at
+            <a href="mailto:chillpick@gmail.com">chillpick@gmail.com</a> with
+            details of the problem.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <%- include('../partials/footer') %> <% /*
+    <script src="../../js/load-partials.js"></script>
+    */ %>
+  </body>
+</html>

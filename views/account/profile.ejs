@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChillPick | Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/account/profile1.css">
+  <link rel="stylesheet" href="../../css/app.css">
+</head>
+<body>
+
+  <%- include('../partials/header') %>
+
+    <main class="container py-5">
+
+      <!--Success Popup Modal-->
+      <div class="custom-modal" id="successModal">
+        <div class="custom-modal-content">
+          <i class="bi bi-check-circle" style="color: rgb(56, 207, 56); font-size: 80px;"></i>
+          <h5 class="mb-3">Updated Successfully!</h5>
+          <button class="btn btn-warning" id="closeModalBtn">OK</button>
+        </div>
+      </div>
+
+      <!-- Change Password Modal -->
+      <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="changePasswordForm">
+                <div class="mb-3">
+                  <label for="currentPassword" class="form-label">Current Password*</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="currentPassword" required>
+                    <button class="btn btn-outline-secondary toggle-password" type="button"
+                      data-target="currentPassword">
+                      <i class="bi bi-eye-slash"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" id="currentPasswordFeedback"></div>
+                </div>
+                <div class="mb-3">
+                  <label for="newPassword" class="form-label">New Password*</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="newPassword" required>
+                    <button class="btn btn-outline-secondary toggle-password" type="button" data-target="newPassword">
+                      <i class="bi bi-eye-slash"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" id="newPasswordFeedback"></div>
+                  <small class="form-text text-muted">
+                    Password must be at least 8 characters with:
+                    <ul class="ps-3 mb-0">
+                      <li>1 uppercase letter</li>
+                      <li>1 lowercase letter</li>
+                      <li>1 digit</li>
+                      <li>Cannot be same as current password</li>
+                    </ul>
+                  </small>
+                </div>
+                <div class="mb-3">
+                  <label for="confirmPassword" class="form-label">Confirm New Password*</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="confirmPassword" required>
+                    <button class="btn btn-outline-secondary toggle-password" type="button"
+                      data-target="confirmPassword">
+                      <i class="bi bi-eye-slash"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" id="confirmPasswordFeedback"></div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-warning" id="savePasswordBtn">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Verify Password Modal -->
+      <div class="modal fade" id="verifyPasswordModal" tabindex="-1" aria-labelledby="verifyPasswordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="verifyPasswordModalLabel">Verify Your Identity</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p class="text-danger mb-3" id="verifyPasswordError" style="display: none;"></p>
+              <p>For security, please enter your current password to continue with account deletion.</p>
+              <div class="mb-3">
+                <label for="verifyPassword" class="form-label">Current Password*</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" id="verifyPassword" required>
+                  <button class="btn btn-outline-secondary toggle-password" type="button" data-target="verifyPassword">
+                    <i class="bi bi-eye-slash"></i>
+                  </button>
+                </div>
+                <div class="invalid-feedback" id="verifyPasswordFeedback"></div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" id="verifyPasswordBtn">Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Picture Upload Modal -->
+      <div class="modal fade" id="uploadPicModal" tabindex="-1" aria-labelledby="uploadPicModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="uploadPicModalLabel">Upload Profile Picture</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="text-center mb-3">
+                <img id="imagePreview" src="<%= user.profilePicture || '/images/profile_pic.png' %>" alt="Preview" class="img-fluid rounded-circle"
+                  style="width: 200px; height: 200px; object-fit: cover;"
+                  onerror="if(!this.src.endsWith('/images/profile_pic.png')){this.src='/images/profile_pic.png';}">
+              </div>
+              <div class="mb-3">
+                <input type="file" class="form-control" id="profileImageInput" accept="image/*">
+                <small class="text-muted">Recommended size: 200x200 pixels</small>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-warning" id="saveProfilePicBtn">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Session Expiring Soon Modal and Session Expired Modal now live in
+           partials/header.ejs, shared sitewide by js/session-inactivity.js -->
+
+      <!-- Logout Confirmation Modal -->
+      <div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content p-4 text-center">
+            <i class="bi bi-box-arrow-right text-danger fs-1 mb-3"></i>
+            <h4 class="fw-bold">Confirm Logout</h4>
+            <p>Are you sure you want to log out?</p>
+            <div class="d-flex justify-content-center gap-2 mt-3">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button class="btn btn-danger" id="confirmLogoutBtn">Yes, Log Out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Profile Page Content -->
+      <div class="container profile-container">
+        <h2 id="welcomeMessage" style="margin: 30px auto;">Welcome back, <%= user.username %>
+        </h2>
+        <div class="row">
+          <!-- Left Sidebar -->
+          <div class="col-md-4 mb-3">
+            <div class="profile-sidebar text-center">
+              <img src="<%= user.profilePicture || '/images/profile_pic.png' %>" alt="Profile Picture" class="profile-pic" id="profilePicture"
+                onerror="if(!this.src.endsWith('/images/profile_pic.png')){this.src='/images/profile_pic.png';}">
+              <h3 id="profileName">
+                <%= user.username %>
+              </h3>
+              <h6 class="text-muted" id="profileEmail">
+                <%= user.email %>
+              </h6>
+
+              <button class="btn btn-outline-warning btn-sm mt-2 mb-4" id="uploadPicBtn" data-bs-toggle="modal"
+                data-bs-target="#uploadPicModal">
+                <i class="bi bi-upload"></i> Upload Profile Picture
+              </button>
+
+              <div class="text-start">
+                <h5 class="section-title text-center">About</h5>
+                <div class="bio-section">
+                  <div id="bioDisplay" class="d-flex justify-content-between align-items-center">
+                    <p id="bioText" class="bio-placeholder mb-0">
+                      <%= user.bio || 'Add your bio...' %>
+                    </p>
+                    <button id="editBioBtn" class="btn btn-link p-0 ms-2">
+                      <i class="bi bi-pencil-square" style="color: var(--orange);"></i>
+                    </button>
+                  </div>
+                  <div id="bioEdit" class="d-none">
+                    <textarea id="bioInput" class="form-control mb-2" rows="3"><%= user.bio || '' %></textarea>
+                    <div class="d-flex justify-content-end gap-2">
+                      <button id="cancelBioBtn" class="btn btn-sm btn-outline-secondary">Cancel</button>
+                      <button id="saveBioBtn" class="btn btn-sm btn-outline-warning">Save</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Favourite genres (from the onboarding quiz) - drive dashboard recommendations -->
+              <div class="text-start mt-4">
+                <h5 class="section-title text-center">Favourite Genres</h5>
+                <div class="d-flex flex-wrap gap-2 justify-content-center mb-2" id="favouriteGenres">
+                  <% if (user.preferredGenres && user.preferredGenres.length > 0) { %>
+                    <% user.preferredGenres.forEach(function(genre) { %>
+                      <span class="badge rounded-pill text-dark" style="background-color: #f1dd93; font-weight: 500;"><%= genre %></span>
+                    <% }); %>
+                  <% } else { %>
+                    <span class="text-muted small">No favourite genres picked yet.</span>
+                  <% } %>
+                </div>
+                <div class="text-center">
+                  <a href="/account/onboarding?from=profile" class="btn btn-outline-warning btn-sm" id="editGenresBtn">
+                    <i class="bi bi-pencil-square"></i> Edit favourite genres
+                  </a>
+                </div>
+              </div>
+
+
+              <div class="d-flex justify-content-end mt-4">
+                <button id="logoutBtn" class="btn btn-outline-danger d-flex align-items-center gap-2"
+                  data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">
+                  <i class="bi bi-box-arrow-right"></i>
+                  Log Out
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Content (mb-3 matches the left column so both cards end level) -->
+          <div class="col-md-8 mb-3">
+            <div class="profile-content">
+              <h3 class="section-title" style="font-size: 2rem;">Personal Details</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label" style="font-size: 1.1rem;">Username*</label>
+                    <input type="text" class="form-control form-control-lg" id="usernameField"
+                      value="<%= user.username %>" readonly>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label" style="font-size: 1.1rem;">Email*</label>
+                    <input type="email" class="form-control form-control-lg" id="emailField" value="<%= user.email %>"
+                      readonly>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label" style="font-size: 1.1rem;">Phone No*</label>
+                    <input type="tel" class="form-control form-control-lg" id="phoneField" value="<%= user.phone %>">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label" style="font-size: 1.1rem;">Gender</label>
+            <select class="form-control form-control-lg" id="genderField" disabled>
+  <option value="" disabled <%= !user.gender ? 'selected' : '' %>>Please select your gender</option>
+  <option value="Male" <%= user.gender === 'Male' ? 'selected' : '' %>>Male</option>
+  <option value="Female" <%= user.gender === 'Female' ? 'selected' : '' %>>Female</option>
+  <option value="Other" <%= user.gender === 'Other' ? 'selected' : '' %>>Other</option>
+</select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex gap-3 mt-4">
+                <button class="btn btn-warning" id="changePasswordBtn" data-bs-toggle="modal"
+                  data-bs-target="#changePasswordModal">Change Password</button>
+                <button class="btn btn-outline-warning" id="editBtn">Edit</button>
+                <button class="btn btn-outline-danger" id="deleteAccountBtn" data-bs-toggle="modal"
+                  data-bs-target="#verifyPasswordModal">Delete account</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+<!-- Delete Account Modal -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="text-center mb-3">Are you sure you want to delete your account?</h4>
+        <p class="text-center mb-4" style="color: #6c757d;">
+          This process cannot be undone. </p>
+
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" id="confirmDeleteCheckbox">
+          <label class="form-check-label" for="confirmDeleteCheckbox">
+            I understand this will delete all my data permanently.
+          </label>
+        </div>
+
+          <div class="modal-buttons">
+        <button id="noDeleteAccountModalBtn" class="btn btn-outline-secondary" style="width: 100px;">No</button>
+            <button id="deleteAccountModalBtn" class="btn btn-warning" style="width: 100px;" disabled>Yes</button>        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </main>
+
+    <%- include('../partials/footer') %>
+
+      <script src="js/load-partials.js"></script>
+      <script src="../../js/account/profile.js"></script>
+      <script src="/js/account/logout.js"></script>
+
+</body>
+
+</html>

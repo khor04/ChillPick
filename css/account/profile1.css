@@ -1,0 +1,238 @@
+:root {
+  --orange: #eb8826;
+  --light-bg: #f5f6fa;
+}
+body {
+  background-color: var(--light-bg);
+  font-family: "Segoe UI", sans-serif;
+}
+.profile-container {
+  max-width: 1300px;
+  margin: 30px auto;
+}
+.profile-sidebar,
+.profile-content {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  /* Grow with content (e.g. favourite genres) instead of overflowing a fixed
+     500px; height: 100% keeps both cards the same height side by side. */
+  min-height: 500px;
+  height: 100%;
+}
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 20px;
+  border: 3px solid var(--orange);
+}
+.section-title {
+  font-weight: 600;
+  margin-bottom: 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--orange);
+  color: #333;
+}
+
+.section-title + .row {
+  margin-top: 30px;
+}
+.btn-orange {
+  background-color: var(--orange);
+  color: white;
+  border: black;
+}
+.btn-outline-orange {
+  border: 1px solid var(--orange);
+  color: var(--orange);
+}
+.bio-placeholder {
+  color: #999;
+  font-style: italic;
+  cursor: pointer;
+}
+.logout-btn {
+  color: #dc3545;
+  font-weight: 500;
+}
+
+/* Popup Styles */
+.custom-modal {
+  display: none;
+  position: fixed;
+  z-index: 1050;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+.custom-modal-content {
+  background-color: #fff;
+  padding: 20px 40px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Password Modal Styles */
+#changePasswordModal .modal-content {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+#changePasswordModal .modal-header {
+  border-bottom: 2px solid var(--orange);
+}
+
+#changePasswordModal .modal-title {
+  font-weight: 600;
+  color: #333;
+}
+
+#changePasswordModal .form-control {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#changePasswordModal .form-control:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 0.25rem rgba(235, 136, 38, 0.25);
+}
+
+/* Password Toggle Button */
+.toggle-password {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.toggle-password:hover {
+  background-color: #e9ecef;
+}
+
+/* Password Requirements List */
+#changePasswordModal .form-text ul {
+  list-style-type: none;
+}
+
+#changePasswordModal .form-text ul li:before {
+  content: "•";
+  color: var(--orange);
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+/* Invalid Feedback Styles */
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Show invalid feedback when parent has is-invalid */
+.is-invalid ~ .invalid-feedback {
+  display: block;
+}
+/* Red border for invalid inputs */
+.is-invalid {
+  border-color: #dc3545 !important;
+}
+
+.is-invalid:focus {
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* For input-group with invalid state */
+.input-group .is-invalid {
+  z-index: 3;
+}
+
+.input-group .is-invalid + .btn {
+  border-color: #dc3545;
+}
+
+/* Profile Picture Styles */
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--orange);
+  margin: 0 auto 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-pic:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Image Preview Styles */
+#imagePreview {
+  border: 2px dashed #ddd;
+  padding: 5px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+#imagePreview:hover {
+  border-color: var(--orange);
+}
+
+/* Session Modals Styles */
+#sessionExpiringModal .modal-content,
+#sessionExpiredModal .modal-content {
+  border-radius: 12px;
+}
+
+#sessionExpiringModal .bi,
+#sessionExpiredModal .bi {
+  font-size: 3.5rem;
+}
+
+#countdown {
+  font-weight: bold;
+  color: var(--orange);
+  font-size: 1.2em;
+}
+
+#sessionExpiredModal .modal-content {
+  border-top: 4px solid #dc3545;
+}
+
+#sessionExpiringModal .modal-content {
+  border-top: 4px solid #ffc107;
+}
+
+select:disabled {
+  background-color: #fff !important;
+  color: #212529;
+  -webkit-text-fill-color: #212529;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+@media (max-width: 767.98px) {
+  .profile-sidebar,
+  .profile-content {
+    padding: 20px;
+    margin-bottom: 20px;
+    height: auto !important;
+  }
+}

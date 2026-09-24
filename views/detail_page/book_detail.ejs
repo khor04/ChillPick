@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width; initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <title>ChillPick | Book Detail</title>
+        <style>
+          #btnBooklist:hover,
+          #btnRead:hover {
+            background-color: #ffc107 !important;
+            color: black !important;
+            border-color: #ffc107 !important;
+          }
+        </style>
+       
+        <link rel="icon" type="image/x-icon" src="Image/logo.jpg" style="float: left; font-weight: 70; height: 70;">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="../../css/app.css">
+        <link rel="stylesheet" href="../../css/detail_page/book_detail.css">
+         <script>
+  const currentUser = <%- JSON.stringify(currentUser || null) %>;
+</script>
+
+</head>  
+
+<body>
+  <%- include('../partials/header') %>
+   <!--Main Body-->
+    <main class="container my-5">
+
+        <!--Media Detail Section-->
+        <section class="mb-5">
+            <div class="row">
+                <!--Poster-->
+                <div class="col-md-4 text center">
+                  <div class="poster-wrapper" data-history-id="<%= book.id %>" data-history-type="book">
+                    <img src="<%= book.volumeInfo.imageLinks?.thumbnail || '/images/default-book.jpg' %>" alt="<%= book.volumeInfo.title %>" class="img-fluid mb-3" style="width: 1000px; height: auto;">
+                    <span class="completed-badge"><i class="bi bi-check-circle-fill"></i> Read</span>
+                <span class="watchlist-badge"><i class="bi bi-bookmark-check-fill"></i> In Watchlist</span>
+                  </div>
+                </div>
+               
+                <!--Synopsis-->
+                <div class="col-md-8">
+                  <h3 class="display-5 fw-bold mb-3 book-title"><%= (book && book.volumeInfo && book.volumeInfo.title) ? book.volumeInfo.title : 'Unknown Book' %></h3>
+               
+
+                   <div class="mb-4">
+                      <span class="badge bg-secondary"><i class="bi bi-book"></i> Book</span>
+                        <% if (book.volumeInfo.publishedDate) { %>
+                      <span class="badge bg-secondary ms-1"><i class="bi bi-calendar3"></i> Published: <%= book.volumeInfo.publishedDate %></span>
+                     <% } %>
+                  </div>
+
+                  <% if (book.volumeInfo.authors) { %>
+                  <div class="mb-4">
+                     <h6 class="d-inline me-2">Author(s):</h6>
+                     <% book.volumeInfo.authors.forEach(author => { %>
+                     <span class="badge text-dark ms-1"><%= author %></span>
+                     <% }); %>
+                  </div>
+                  <% } %>
+
+                     <h5 class="d-inline me-2 book-rating" style="font-size: 15px;">
+                    Rating: <%= book.volumeInfo.averageRating?.toFixed(1) || 'N/A' %> / 5
+                  </h5>
+                 <!--Genres-->
+                  <% if (book.volumeInfo.categories) { %>
+                   <div class="mb-4">
+                   <h6 class="d-inline me-2">Genres:</h6>
+                   <% book.volumeInfo.categories.forEach(category => { %>
+                   <span class="badge text-dark ms-1"><%= category %></span>
+                   <% }); %>
+                   </div>
+                   <% } %>
+
+                <!--Synopsis-->
+                <div class="mb-4">
+                  <h6>Synopsis</h6>
+                  <p class="lead" style="font-size: 15px;" id="synopsis">
+                  <%= book.volumeInfo.description || 'No description available.' %>
+                  </p>
+                </div>
+
+                <script>
+                   document.addEventListener('DOMContentLoaded', function() {
+                   const synopsisElement = document.getElementById('synopsis');
+                   if (synopsisElement) {
+                    // Step 1: Create a temporary element to decode HTML entities
+                    const temp = document.createElement('div');
+                    temp.innerHTML = synopsisElement.innerHTML;
+           
+                    // Step 2: Get decoded text and strip HTML tags
+                    const decodedText = temp.textContent || temp.innerText;
+                    const cleanText = decodedText.replace(/<[^>]*>/g, ''); // Remove any remaining tags
+           
+                    // Step 3 (Optional): Replace multiple spaces/newlines
+                    const finalText = cleanText.replace(/\s+/g, ' ').trim();
+           
+                    synopsisElement.textContent = finalText;
+                    }
+                    });
+                    </script>
+
+                   <!--Rating-->
+                   <% if (book.volumeInfo.averageRating) { %>
+                   <div class="mb-4">
+                    <h5 class="d-inline me-2" style="font-size: 15px;">Rating: <%= book.volumeInfo.averageRating.toFixed(1) %> / 5</h5>
+                   </div>
+                   <% } %>
+
+                     <!--button for Booklist & mark view-->
+                     <div class="row mt-4">
+                        <div class="col-lg-3" style="border-color=btn-warning;">
+                        <button class="btn btn-outline-warning text-dark" id="btnBooklist"><i class="bi bi-plus-lg"></i> Add to Watchlist</button>
+                        </div>
+                        <div class="col-lg-4">
+                        <%
+                          const readUrl = book.volumeInfo.previewLink || book.volumeInfo.infoLink || book.saleInfo?.buyLink || null;
+                          const readLabel = book.volumeInfo.previewLink
+                            ? 'Read Preview'
+                            : (book.volumeInfo.infoLink ? 'View on Google Books' : (book.saleInfo?.buyLink ? 'Buy Now' : 'Read Now'));
+                        %>
+                        <% if (readUrl) { %>
+                          <a href="<%= readUrl %>" target="_blank" rel="noopener" class="btn btn-outline-warning text-dark" id="btnRead">
+                            <i class="bi bi-book"></i> <%= readLabel %>
+                          </a>
+                        <% } else { %>
+                          <button class="btn btn-outline-secondary" disabled>Not available online</button>
+                        <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--Book Detail-->
+        <section class="content-section animated delay-1">
+        <h2 class="section-title mb-4" id="BookDetailSectionTitle">Book Details</h2>
+          <div class="container">
+            <div class="row g-4">
+     
+            <!-- Author -->
+            <% if (book.volumeInfo.authors) { %>
+            <div class="col-md-6">
+                <div class="detail-item">
+                   <div class="detail-label fw-bold"><i class="bi bi-person-fill me-2"></i>Author</div>
+                      <div><%= book.volumeInfo.authors.join(', ') %></div>
+                </div>
+            </div>
+            <% } %>
+
+            <!-- Published -->
+            <% if (book.volumeInfo.publishedDate) { %>
+            <div class="col-md-6">
+               <div class="detail-item">
+                  <div class="detail-label fw-bold"><i class="bi bi-calendar-heart me-2"></i>Published</div>
+                     <div><%= book.volumeInfo.publishedDate %></div>
+              </div>
+            </div>
+            <% } %>
+
+            <!-- Pages -->
+            <% if (book.volumeInfo.pageCount) { %>
+              <div class="col-md-6">
+                 <div class="detail-item">
+                    <div class="detail-label fw-bold"><i class="bi bi-book me-2"></i>Pages</div>
+                      <div><%= book.volumeInfo.pageCount %></div>
+                 </div>
+              </div>
+            <% } %>
+
+            <!-- Language -->
+            <% if (book.volumeInfo.language) { %>
+            <div class="col-md-6">
+            <div class="detail-item">
+            <div class="detail-label fw-bold"><i class="bi bi-translate me-2"></i>Language</div>
+              <div><%= book.volumeInfo.language.toUpperCase() %></div>
+            </div>
+            </div>
+            <% } %>
+        </div>
+       </div>
+    </section>
+
+    <!--Recommendations-->
+<section class="mb-5">
+  <h3 class="mb-4">You May Also Like</h3>
+  
+  <% if (typeof recommendations !== 'undefined' && recommendations.length > 0) { %>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      <% recommendations.forEach(book => { %>
+        <div class="col">
+          <div class="card h-100" data-history-id="<%= book.id %>" data-history-type="book">
+            <a href="/book_detail/<%= book.id %>">
+              <div class="poster-wrapper">
+                <img src="<%= book.image %>"
+                     class="card-img-top"
+                     alt="<%= book.title %>"
+                     onerror="this.onerror=null;this.src='/images/default-book.jpg'"
+                     style="height: 300px; object-fit: contain; background-color: #f8f9fa; padding: 10px;">
+                <span class="completed-badge"><i class="bi bi-check-circle-fill"></i> Read</span>
+                <span class="watchlist-badge"><i class="bi bi-bookmark-check-fill"></i> In Watchlist</span>
+              </div>
+            </a>
+            <div class="card-body">
+              <h5 class="card-title"><%= book.title %></h5>
+              <p class="card-text text-muted" style="text-align: center;">
+                <%= book.year %> • <%= book.authors %>
+                <% if (book.genres && book.genres.length > 0) { %>
+                  <br><small><%= book.genres.slice(0, 2).join(' • ') %></small>
+                <% } %>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } else { %>
+    <div class="alert alert-info">
+      <p>No recommendations found for this book.</p>
+    </div>
+  <% } %>
+</section>
+
+     <!-- Review Section -->
+<section class="details-section" style="background-color: white; padding: 2rem;">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="bi bi-chat-left-dots me-2"></i> User Reviews</h3>
+    <% if (currentUser) { %>
+      <button class="btn btn-warning" id="writeReviewBtn">Write a Review</button>
+    <% } else { %>
+      <p class="text-muted mb-0">You must log in to rate this item.</p>
+    <% } %>
+  </div>
+
+  <!-- Review Form -->
+  <div id="reviewForm" class="card mb-4 p-3 border shadow-sm d-none"> 
+    <h5 class="mb-3">Write Your Review</h5>
+    <div class="mb-3">
+ 
+      <div id="ratingInput" class="mb-2">
+        <i class="bi bi-star-fill" data-value="1" style="font-size: 1.5rem; cursor: pointer; color: #ddd;"></i>
+        <i class="bi bi-star-fill" data-value="2" style="font-size: 1.5rem; cursor: pointer; color: #ddd;"></i>
+        <i class="bi bi-star-fill" data-value="3" style="font-size: 1.5rem; cursor: pointer; color: #ddd;"></i>
+        <i class="bi bi-star-fill" data-value="4" style="font-size: 1.5rem; cursor: pointer; color: #ddd;"></i>
+        <i class="bi bi-star-fill" data-value="5" style="font-size: 1.5rem; cursor: pointer; color: #ddd;"></i>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="confirmRatingCheck">
+        <label class="form-check-label" for="confirmRatingCheck">Contains Spoilers</label>
+      </div>
+    </div>
+    <div class="mb-3">
+
+      <textarea class="form-control" rows="4" placeholder="Write your review..." maxlength="500"></textarea>
+      <div class="form-text">Maximum 500 characters</div>
+    </div>
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-warning">Submit Review</button>
+      <button type="button" class="btn btn-secondary" onclick="document.getElementById('reviewForm').classList.add('d-none')">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Reviews Container -->
+  <div id="reviewsContainer" style="border-left: 3px solid var(--accent-color);">
+    <!-- Reviews will be loaded here dynamically -->
+  </div>
+
+  <!-- Load More Button -->
+  <div class="text-center mt-4">
+    <button class="btn btn-warning load-more-reviews-btn" style="display: none;">
+      Load More Reviews
+    </button>
+  </div>
+</section>
+    </main>
+  
+
+     <script src="../../js/history-badges.js"></script>
+     <script src="../../js/detail_page/book_detail.js"></script>
+     <script src="../../js/watchlist-handler.js"></script>
+     <script>
+       document.addEventListener("DOMContentLoaded", function () {
+         if (window.ChillPickHistoryBadges) {
+           window.ChillPickHistoryBadges.applyAllBadges("[data-history-id]");
+         }
+       });
+     </script>
+     </main>
+     <%- include('../partials/footer') %>
+    </body>
+   
+
+
+</html>
+
+
+
+

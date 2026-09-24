@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChillPick | Home</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/landing.css" />
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+
+    <section class="hero-section">
+      <div class="overlay">
+        <h1>Discover Your Next Favourites</h1>
+        <p>
+          Track what you’ve watched and read. Find personalized<br />
+          recommendations from our community.
+        </p>
+      </div>
+    </section>
+
+    <!-- Movie Chart -->
+    <section class="charts-toggle">
+      <h3>Top Movie Charts</h3>
+      <p
+        id="lastUpdated"
+        style="font-size: 0.9rem; color: #888; margin-top: -1rem"
+      >
+        Loading...
+      </p>
+      <div class="text-center mb-4">
+        <select
+          onchange="updateChartMetric(this.value)"
+          class="form-select w-auto mx-auto"
+          style="border: 2px solid #f4a259; border-radius: 8px; color: #6b4f3d"
+        >
+          <option value="rating">IMDb Rating</option>
+          <option value="popularity">Popularity</option>
+        </select>
+      </div>
+      <div class="container">
+        <div id="entertainmentChart"></div>
+      </div>
+    </section>
+
+    <!-- Cinematic -->
+    <section id="cinematicSection" class="cinematic-nezha">
+      <div class="nezha-overlay"></div>
+      <div class="nezha-content container">
+        <div class="nezha-info" id="nezhaInfo"></div>
+        <div class="nezha-carousel-wrap">
+          <div class="nezha-carousel" id="nezhaCarousel"></div>
+          <div class="nezha-dots" id="nezhaDots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Book Chart -->
+    <section class="charts-toggle">
+      <h3>Top Books Chart</h3>
+      <p
+        id="booksLastUpdated"
+        style="font-size: 0.9rem; color: #888; margin-top: -1rem"
+      >
+        Loading...
+      </p>
+      <div class="container">
+        <div id="booksChart"></div>
+      </div>
+    </section>
+    
+    <!-- Book Cinematic Section -->
+    <section id="bookCinematicSection" class="cinematic-nezha">
+      <div class="nezha-overlay"></div>
+      <div class="nezha-content container">
+        <div class="nezha-info" id="bookInfo"></div>
+        <div class="nezha-carousel-wrap">
+          <div class="nezha-carousel" id="bookCarousel"></div>
+          <div class="nezha-dots" id="bookDots"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="callToAction" class="call-to-action">
+      <h2 style="color: #5d4536; font-weight: 510">
+        Ready to start tracking your entertainment?
+      </h2>
+      <p>
+        Join millions of users discovering and sharing their favorite movies and
+        music
+      </p>
+      <button id="signupBtn" class="btn btn-warning fw-semibold">
+        Sign Up – It's Free
+      </button>
+    </section>
+
+    <script src="../js/landing.js"></script>
+    <%- include('partials/footer') %>
+  </body>
+</html>

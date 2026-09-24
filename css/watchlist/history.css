@@ -1,0 +1,346 @@
+body {
+  background-color: #f3f3e6;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+.navbar-chillpick {
+  background-color: #ebe8d5;
+  padding: 0.75rem 2rem;
+}
+
+.logo {
+  height: 55px;
+}
+
+.navbar-chillpick .nav-link {
+  color: #3c3c3c !important;
+  font-weight: 600;
+  margin: 0 10px;
+}
+
+.navbar-chillpick .profile-pic {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Mobile tweaks */
+@media (max-width: 991px) {
+  .navbar-chillpick .profile-pic {
+    display: none;
+  }
+}
+
+.footer-chillpick {
+  background-color: #a89884;
+  color: white;
+  padding: 25px 0;
+  text-align: center;
+}
+
+.footer-chillpick a {
+  color: white;
+  margin: 0 20px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.footer-chillpick a:hover {
+  text-decoration: underline;
+}
+
+.footer-chillpick p {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.container {
+  max-width: 950px;
+  margin: 2rem auto;
+  padding: 0 20px;
+}
+
+h1 {
+  color: #6b4f3d;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* Filter Buttons */
+.history-filters {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+  color: #555;
+}
+
+.filter-buttons .btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.share-btn {
+  background: none;
+  color: #3c3c3c;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.share-btn:hover {
+  background-color: #b3b3b3;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background-color: #e8e1d1;
+  color: black;
+}
+
+/* History Items */
+.history-item {
+  display: flex;
+  gap: 25px;
+  align-items: flex-start;
+  padding: 1rem 0;
+}
+
+.item-image {
+  width: 120px;
+  height: 160px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.item-content {
+  flex-grow: 1;
+}
+
+.history-item h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.history-item p {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.history-item h6 {
+  color: #27ae60;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-left: auto;
+  padding: 8px 12px;
+  background-color: #e8f5e9;
+  border-radius: 4px;
+  align-self: center;
+}
+
+.more-btn {
+  background-color: rgb(211, 210, 210);
+  color: black;
+  border-color: rgb(211, 210, 210);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 0.9rem;
+}
+
+.more-btn:hover {
+  background-color: rgb(161, 161, 161);
+}
+
+/* Pagination */
+.pagination .page-link {
+  border-radius: 10px;
+  font-weight: 500;
+  border: 1px solid #ddd;
+  color: #555;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #f1dd93;
+  border-color: #f1dd93;
+  color: #2c1d0e;
+}
+
+.pagination .page-item:first-child .page-link {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.pagination .page-item:last-child .page-link {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.pagination .page-item:not(:first-child):not(:last-child) .page-link {
+  border-radius: 0;
+}
+
+.filter-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.filter-section {
+  padding-bottom: 0.5rem;
+  margin-bottom: -10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.filter-line {
+  height: 2px;
+  background-color: #d9d9d9;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.filter-buttons .btn {
+  background: transparent;
+  font-weight: 600;
+  color: #3c3c3c;
+  border: none;
+  padding: 0.5rem 1rem;
+}
+
+.filter-buttons .btn.active {
+  color: #2c1d0e;
+  border-bottom: 3px solid #2c1d0e;
+  border-radius: 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+  position: relative;
+  top: -12px; 
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .history-filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .action-buttons {
+    display: flex;
+    margin-left: 0;
+    margin-top: -50px;
+
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .history-item {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .item-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+  }
+
+  .history-item h6 {
+    margin-left: 0;
+    align-self: flex-start;
+  }
+
+  .filter-options {
+    justify-content: center;
+  }
+
+  .page-item .page-link {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.9rem;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+}
+
+/* Phones: tabs + Share don't fit on one row. Put Share on its own row above
+   the tabs (so the tabs stay on the underline) and tighten the tabs. Placed
+   last so it wins over the .action-buttons rules above. */
+@media (max-width: 576px) {
+  .filter-section {
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+  }
+
+  .filter-buttons {
+    gap: 0.25rem !important; /* overrides Bootstrap's gap-3 */
+  }
+
+  .filter-buttons .btn {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .action-buttons {
+    order: -1;
+    width: 100%;
+    justify-content: flex-end;
+    margin: 0;
+    top: 0;
+  }
+}

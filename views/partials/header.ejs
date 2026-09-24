@@ -1,0 +1,307 @@
+<header class="navbar navbar-expand-lg py-3" style="background-color: #EBE8D5;">
+  <div class="container-fluid justify-content-between align-items-center px-4">
+
+    <!-- Left Logo -->
+    <a class="navbar-brand d-flex align-items-center" href="/">
+      <img src="../../images/logo_final.png" alt="ChillPick Logo" style="height: 60px;">
+    </a>
+
+
+    <!-- Toggler for mobile (only show when logged in) -->
+<div id="mobileMenuToggle" class="d-lg-none d-none">
+  <button class="navbar-toggler border-2 rounded-3 px-2" type="button" data-bs-toggle="collapse"
+    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</div>
+    <!-- Centered Nav Links -->
+    <div class="collapse navbar-collapse justify-content-center desktop-center" id="navbarNav">
+      <div id="authNav" style="display: none">
+        <ul class="navbar-nav flex-row flex-wrap text-center">
+          <li class="nav-item"><a class="nav-link nav-custom" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link nav-custom" href="/dashboard">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link nav-custom" href="/discover">Discover</a></li>
+          <li class="nav-item"><a class="nav-link nav-custom" href="/watchlist">Watchlist</a></li>
+          <!-- Mobile profile text link -->
+          <li class="nav-item d-lg-none">
+            <a href="/account/profile" id="userTextLink" class="nav-link nav-custom d-none">Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Right Auth Buttons -->
+    <div class="d-flex align-items-center gap-2">
+      <!-- Sign In (logged out) -->
+      <a href="/account/login" id="loginLink" class="btn btn-signin d-none">Sign In</a>
+
+      <!-- Notification Bell (logged in) -->
+      <div class="dropdown d-none" id="notifBell">
+        <button class="btn position-relative notif-bell-btn" type="button" id="notifBellBtn"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-bell fs-5"></i>
+          <span class="badge rounded-pill bg-danger notif-badge d-none" id="notifBadge">0</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-end notif-dropdown" aria-labelledby="notifBellBtn">
+          <div class="d-flex justify-content-between align-items-center px-3 py-2">
+            <span class="fw-bold">Notifications</span>
+            <button type="button" class="btn btn-sm btn-link p-0 text-decoration-none" id="markAllReadBtn">Mark all read</button>
+          </div>
+          <hr class="dropdown-divider my-0">
+          <div id="notifList">
+            <div class="text-center text-muted py-3 small">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Icon (logged in) -->
+      <a href="/account/profile" id="userIcon" class="d-none">
+        <img src="/images/profile_pic.png" alt="Profile" class="rounded-circle" style="height: 48px; width: 48px;"
+          onerror="if(!this.src.endsWith('/images/profile_pic.png')){this.src='/images/profile_pic.png';}">
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Session Expiring Soon Modal (sitewide inactivity warning) -->
+<div class="modal fade" id="sessionExpiringModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4 text-center">
+      <i class="bi bi-clock-history text-warning fs-1 mb-3"></i>
+      <h4 class="fw-bold">Session Expiring Soon</h4>
+      <p>You've been inactive for a while. For security, you'll be logged out in <span id="countdown">1:00</span>.
+      </p>
+      <div class="d-flex justify-content-center gap-2">
+        <button id="stayLoggedInBtn" class="btn btn-warning">Stay Logged In</button>
+        <button id="logoutNowBtn" class="btn btn-outline-secondary">Log Out Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Session Expired Modal -->
+<div class="modal fade" id="sessionExpiredModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4 text-center">
+      <i class="bi bi-alarm-fill text-danger fs-1 mb-3"></i>
+      <h4 class="fw-bold">Session Expired</h4>
+      <p>For your security, you've been logged out due to inactivity.</p>
+      <button id="loginAgainBtn" class="btn btn-warning">Log In Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap 5.3.0 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/session-inactivity.js"></script>
+<script src="/js/notifications.js"></script>
+
+</body>
+</html>
+
+<style>
+  .custom-navbar {
+    background-color: #f4f2e6;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 5px 30px;
+    height: 80px;
+  }
+
+  .nav-custom {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #5c5757;
+    text-decoration: none;
+    margin: 0 15px;
+  }
+
+  .navbar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+
+.nav-custom:hover {
+  color: #000 !important;
+}
+.btn-signin {
+  background-color: transparent;
+  color: #6B4F3D;
+  border: 1px solid #6B4F3D;
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-signin:hover {
+  background-color: #6B4F3D;
+  color: white;
+}
+
+
+@media (min-width: 992px) {
+  .navbar-collapse.desktop-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .navbar {
+    position: relative;
+  }
+}
+
+/* Mobile only adjustments */
+@media (max-width: 991.98px) {
+  #mobileMenuToggle {
+    margin-left: auto; /* Push to right */
+    display: flex;
+    align-items: center;
+  }
+  .navbar-toggler {
+    margin-left: auto;
+  }
+  #userIcon {
+    display: none !important;
+  }
+
+  #userTextLink:hover {
+
+    color: white;
+  }
+}
+
+.notif-bell-btn {
+  color: #5c5757;
+  padding: 0.4rem 0.6rem;
+}
+
+.notif-bell-btn:hover {
+  color: #000;
+}
+
+.notif-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 0.65rem;
+  padding: 3px 5px;
+}
+
+.notif-dropdown {
+  width: 340px;
+  max-width: 90vw;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.notif-item {
+  display: block;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid #f0eee6;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.88rem;
+  white-space: normal;
+}
+
+.notif-item:hover {
+  background-color: #f9f7ef;
+  color: #333;
+}
+
+.notif-item.unread {
+  background-color: #fdf6e3;
+}
+
+.notif-item .notif-time {
+  display: block;
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 2px;
+}
+</style>
+
+<script>
+  // Kicked off immediately (not inside DOMContentLoaded) so other scripts on
+  // the page - e.g. the sitewide inactivity timer - can `await` this same
+  // result instead of firing their own duplicate /account/profile-data call.
+  window.chillPickAuthCheck = fetch("/account/profile-data", {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  })
+    .then((res) => (res.ok ? res.json() : null))
+    .catch(() => null);
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    const userIcon = document.getElementById("userIcon");
+    const loginLink = document.getElementById("loginLink");
+    const authNav = document.getElementById("authNav");
+    const userTextLink = document.getElementById("userTextLink");
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+    const notifBell = document.getElementById("notifBell");
+
+    try {
+      const currentUser = await window.chillPickAuthCheck;
+      if (!currentUser) throw new Error("Failed to fetch user data");
+
+      const loggedIn = currentUser && currentUser.username;
+
+      if (loggedIn) {
+        mobileMenuToggle?.classList.remove("d-none");
+        userIcon?.classList.remove("d-none");
+        userTextLink?.classList.remove("d-none");
+        notifBell?.classList.remove("d-none");
+        loginLink?.classList.add("d-none");
+        authNav?.style.setProperty("display", "block");
+
+        const headerImg = userIcon.querySelector("img");
+        if (headerImg) {
+          headerImg.src = currentUser.profilePicture || "/images/profile_pic.png";
+        }
+      } else {
+        mobileMenuToggle?.classList.add("d-none");
+        userIcon?.classList.add("d-none");
+        userTextLink?.classList.add("d-none");
+        notifBell?.classList.add("d-none");
+        loginLink?.classList.remove("d-none");
+        authNav?.style.setProperty("display", "none");
+      }
+
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      mobileMenuToggle?.classList.add("d-none");
+      userIcon?.classList.add("d-none");
+      userTextLink?.classList.add("d-none");
+      notifBell?.classList.add("d-none");
+      loginLink?.classList.remove("d-none");
+      authNav?.style.setProperty("display", "none");
+    }
+
+    // Close mobile menu when link clicked
+    document.querySelectorAll(".navbar-nav .nav-link").forEach(link => {
+      link.addEventListener("click", () => {
+        const toggler = document.querySelector(".navbar-toggler");
+        const collapse = document.querySelector(".navbar-collapse");
+        if (toggler && collapse.classList.contains("show")) {
+          toggler.click();
+        }
+      });
+    });
+  });
+
+  window.addEventListener("pageshow", function (event) {
+  // Force a session recheck if the page was restored from cache
+  if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+    window.location.reload();
+  }
+});
+</script>

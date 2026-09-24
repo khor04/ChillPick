@@ -1,0 +1,181 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-section {
+  background: url("../../images/landing_page/landingBackground.jpg") center /
+    cover no-repeat;
+  position: relative;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 1;
+}
+
+.hero-section .overlay {
+  padding: 15rem 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-section h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #6b4f3d;
+}
+
+.hero-section p {
+  font-size: 1.25rem;
+  color: #524e4e;
+}
+
+.charts-toggle {
+  background: #fff;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.charts-toggle h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #6b4f3d;
+}
+
+.nezha-card {
+  width: 214px;
+  height: 283px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s;
+}
+
+.nezha-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cinematic-nezha {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  min-height: 80vh;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem;
+}
+
+.nezha-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+.nezha-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.nezha-info {
+  max-width: 40%;
+  padding-top: 50px;
+}
+
+.nezha-carousel {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  width: 460px;
+  padding-bottom: 1rem;
+  margin-left: auto;
+  scroll-behavior: smooth;
+}
+
+.nezha-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.nezha-dot {
+  width: 10px;
+  height: 10px;
+  background: white;
+  opacity: 0.5;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.nezha-dot.active {
+  opacity: 1;
+}
+
+.call-to-action {
+  background: #f3f1e6;
+  text-align: center;
+  padding: 9rem 1rem;
+}
+
+.btn-warning {
+  background-color: #f5d47a;
+  color: #382110;
+  padding: 16px 30px;
+  border: none;
+  font-weight: 200;
+}
+
+/* Phones: the poster carousel's fixed 460px width and the 40%-wide text
+   column were built for desktop - stack them full width instead. */
+@media (max-width: 767.98px) {
+  .cinematic-nezha {
+    min-height: auto;
+    padding: 2rem 1rem;
+  }
+
+  .nezha-content {
+    gap: 1.5rem;
+  }
+
+  .nezha-info {
+    max-width: 100%;
+    padding-top: 0;
+  }
+
+  /* The wrapper must be screen-wide (not content-wide) so the carousel
+     scrolls within the screen instead of stretching the page */
+  .nezha-carousel-wrap {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .nezha-carousel {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .nezha-card {
+    flex-shrink: 0;
+    width: 150px;
+    height: 200px;
+  }
+}

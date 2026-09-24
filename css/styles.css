@@ -1,0 +1,201 @@
+body {
+  background: url("../images/background.png") no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start; 
+  padding-left: 130px; 
+}
+
+/* Register form styling */
+.register-form {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 450px;
+  margin: 5% 0;
+  align-self: center;
+}
+
+
+.register-form .form-label {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.register-form .form-control:focus {
+  border-color: #eb8826;
+  box-shadow: 0 0 0 0.25rem rgba(235, 136, 38, 0.25);
+}
+
+.validation-message {
+  font-size: 0.85rem;
+  color: red;
+}
+
+/* Button styling */
+.btn-warning {
+  background-color: #eb8826;
+  border-color: #eb8826;
+  color: white;
+  font-weight: 500;
+  padding: 0.75rem;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.btn-warning:hover {
+  background-color: #d67117;
+  border-color: #d67117;
+}
+
+/* Password toggle */
+.input-group-text {
+  background-color: #fff;
+  border-left: none;
+  cursor: pointer;
+}
+
+/* Link styling */
+.orangeColor {
+  color: #eb8826;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.orangeColor:hover {
+  color: #d67117;
+  text-decoration: underline;
+}
+
+/* Modal styling */
+.modal-content {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 20px;
+  border: none;
+}
+
+.modal-content img {
+  width: 80px;
+  margin-bottom: 1rem;
+}
+
+.modal-content h4 {
+  color: #eb8826;
+  margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .register-form {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .register-form h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Remove default Bootstrap outline */
+.form-control:focus,
+.btn:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+}
+
+.forgot-container {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 450px;
+  margin: 5% 0;
+  align-self: center;
+}
+
+@media (max-width: 768px) {
+  .forgot-container {
+    margin-right: 20px;
+  }
+}
+
+.forgot-container input {
+  margin-top: 15px;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.popup.active {
+  display: block;
+}
+
+.password-req li {
+  font-size: 0.85rem;
+}
+.position-relative .toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.reset-container {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 450px;
+  margin: 5% 0;
+  align-self: center;
+
+}
+
+.position-relative {
+  position: relative;
+}
+/* Position toggle icon nicely inside input */
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 24px;
+  color: #888;
+  user-select: none;
+}
+/* Change icon color on hover */
+.toggle-password:hover {
+  color: #eb8826;
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChillPick | Personalize ChillPick</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+
+<body style="background-color: #f3f3e6; font-family: 'Poppins', sans-serif;">
+  <%- include('../partials/header') %>
+
+  <div class="container py-5 d-flex justify-content-center">
+    <div class="onboarding-card">
+      <% if (editing) { %>
+        <h2 class="fw-bold mb-2" style="color: #2c1d0e;">Your favourite genres</h2>
+        <p class="text-muted mb-4">
+          Update the genres you enjoy across movies and books — your
+          recommendations will use the new picks right away.
+        </p>
+      <% } else { %>
+        <h2 class="fw-bold mb-2" style="color: #2c1d0e;">What do you love?</h2>
+        <p class="text-muted mb-4">
+          Pick a few genres you enjoy across movies and books — we'll use this to
+          personalize your recommendations right away. You can change this anytime
+          from your profile.
+        </p>
+      <% } %>
+
+      <div id="genreGrid" class="genre-grid mb-4">
+        <% genres.forEach(function(genre) { %>
+          <button type="button" class="genre-chip<%= selectedGenres.includes(genre) ? ' selected' : '' %>" data-genre="<%= genre %>">
+            <%= genre %>
+          </button>
+        <% }); %>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center" id="onboardingActions"
+        data-editing="<%= editing %>" data-return-to="<%= returnTo %>">
+        <% if (editing) { %>
+          <a href="<%= returnTo %>" class="text-muted" style="text-decoration: none;">Cancel</a>
+        <% } else { %>
+          <a href="#" id="skipOnboarding" class="text-muted" style="text-decoration: none;">Skip for now</a>
+        <% } %>
+        <button id="continueBtn" class="btn btn-warning px-4" <%= selectedGenres.length === 0 ? 'disabled' : '' %>>
+          <%= editing ? 'Save' : 'Continue' %>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .onboarding-card {
+      background: #fff;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 640px;
+    }
+
+    .genre-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .genre-chip {
+      background: #f6f3ed;
+      border: 1px solid #d9d4cb;
+      border-radius: 999px;
+      padding: 0.5rem 1.1rem;
+      font-weight: 500;
+      color: #444;
+      transition: all 0.15s ease;
+    }
+
+    .genre-chip:hover {
+      border-color: #f1dd93;
+    }
+
+    .genre-chip.selected {
+      background-color: #f1dd93;
+      border-color: #f1dd93;
+      color: #2c1d0e;
+      font-weight: 600;
+    }
+
+    #continueBtn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+
+  <script>
+    const actions = document.getElementById("onboardingActions");
+    const returnTo = actions.dataset.returnTo;
+    const continueBtn = document.getElementById("continueBtn");
+    // Start from the genres already rendered as selected (edit mode)
+    const selected = new Set(
+      [...document.querySelectorAll(".genre-chip.selected")].map((c) => c.dataset.genre)
+    );
+
+    document.querySelectorAll(".genre-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const genre = chip.dataset.genre;
+        if (selected.has(genre)) {
+          selected.delete(genre);
+          chip.classList.remove("selected");
+        } else {
+          selected.add(genre);
+          chip.classList.add("selected");
+        }
+        continueBtn.disabled = selected.size === 0;
+      });
+    });
+
+    async function submitOnboarding(genres) {
+      try {
+        await fetch("/account/onboarding", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ genres }),
+        });
+      } catch (err) {
+        console.error("Failed to save onboarding preferences:", err);
+      } finally {
+        window.location.href = returnTo;
+      }
+    }
+
+    continueBtn.addEventListener("click", () => {
+      submitOnboarding([...selected]);
+    });
+
+    // Only on first-time onboarding; in edit mode "Cancel" is a plain link
+    // (skipping there would wipe the user's saved genres)
+    const skipLink = document.getElementById("skipOnboarding");
+    if (skipLink) {
+      skipLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        submitOnboarding([]);
+      });
+    }
+  </script>
+</body>
+
+</html>

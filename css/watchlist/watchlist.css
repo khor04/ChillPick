@@ -1,0 +1,421 @@
+body {
+  background-color: #f3f3e6;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+.navbar-chillpick {
+  background-color: #ebe8d5;
+  padding: 0.75rem 2rem;
+}
+
+.logo {
+  height: 55px;
+}
+
+.navbar-chillpick .nav-link {
+  color: #3c3c3c !important;
+  font-weight: 600;
+  margin: 0 10px;
+}
+
+.navbar-chillpick .profile-pic {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Mobile tweaks */
+@media (max-width: 991px) {
+  .navbar-chillpick .profile-pic {
+    display: none;
+  }
+}
+
+.footer-chillpick {
+  background-color: #a89884;
+  color: white;
+  padding: 25px 0;
+  text-align: center;
+}
+
+.footer-chillpick a {
+  color: white;
+  margin: 0 20px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.footer-chillpick a:hover {
+  text-decoration: underline;
+}
+
+.footer-chillpick p {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.container {
+  max-width: 950px;
+  margin: 2rem auto;
+  padding: 0 20px;
+}
+
+h1 {
+  color: #6b4f3d;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* Filter Buttons and History Button Row */
+.watchlist-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-section {
+  padding-bottom: 0.5rem;
+  margin-bottom: -10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.filter-line {
+  height: 2px;
+  background-color: #d9d9d9;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.filter-buttons .btn {
+  background: transparent;
+  font-weight: 600;
+  color: #3c3c3c;
+  border: none;
+  padding: 0.5rem 1rem;
+}
+
+.filter-buttons .btn.active {
+  color: #2c1d0e;
+  border-bottom: 3px solid #2c1d0e;
+  border-radius: 0;
+}
+
+.history-btn {
+  color: #3c3c3c;
+  background: none;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: auto;
+}
+
+.history-btn:hover {
+  background-color: #e8e1d1;
+}
+
+/* Watchlist Items */
+.watchlist-item {
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+
+.item-image {
+  width: 120px;
+  height: 160px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.item-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.watchlist-item h2 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.watchlist-item p {
+  color: #666;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+  margin-top: 14px;
+}
+.share-btn {
+  background: none;
+  color: #3c3c3c;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.share-btn:hover {
+  background-color: #b3b3b3;
+}
+
+.item-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-actions .btn {
+  width: 100%;
+}
+
+.more-btn {
+  background-color: #e3e3e3;
+  color: black;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: flex-start;
+}
+
+.more-btn:hover {
+  background-color: #b3b3b3;
+}
+
+.action-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mark-btn {
+  background-color: rgb(128, 184, 221);
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  width: 100%;
+}
+
+.mark-btn:hover {
+  background-color: #3498db82;
+  border-color: #ccc;
+}
+.remove-btn {
+  background-color: #b00e0c;
+  color: white;
+  border: none;
+  padding: 4px 6px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  width: 100%;
+}
+
+.remove-btn:hover {
+  background-color: #df4736;
+  border-color: #ccc;
+}
+
+/* History Section (when visible) */
+.history-section {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Pagination */
+.pagination .page-link {
+  border-radius: 10px;
+  font-weight: 500;
+  border: 1px solid #ddd;
+  color: #555;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #f1dd93;
+  border-color: #f1dd93;
+  color: #2c1d0e;
+}
+
+.pagination .page-item:first-child .page-link {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.pagination .page-item:last-child .page-link {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.pagination .page-item:not(:first-child):not(:last-child) .page-link {
+  border-radius: 0;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .history-btn,
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: inherit;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    background-color: transparent;
+    color: #3c3c3c;
+    text-decoration: none;
+    line-height: 1;
+    box-sizing: border-box;
+  }
+
+  .action-buttons {
+    display: flex;
+    margin-left: 0;
+    margin-top: -50px;
+
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .watchlist-item {
+    flex-direction: column;
+  }
+
+  .item-image {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+  }
+
+  .filter-wrapper {
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-line {
+    height: 2px;
+    background-color: #d9d9d9;
+    width: 100%;
+  }
+  .history-btn {
+    margin-left: 0;
+  }
+
+  .action-list {
+    margin-top: 6px;
+    gap: 6px;
+    justify-content: flex-end;
+    margin-bottom: 50px;
+  }
+  .page-item .page-link {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.9rem;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+  position: relative;
+  top: -12px;
+}
+
+/* Phones: tabs + History/Share don't fit on one row. Put History/Share on
+   their own row above the tabs (so the tabs stay on the underline), tighten
+   the tabs, and give the item buttons a proper touch height. Placed last so
+   it wins over the .action-buttons rule above. */
+@media (max-width: 576px) {
+  .filter-section {
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+  }
+
+  .filter-buttons {
+    gap: 0.25rem !important; /* overrides Bootstrap's gap-3 */
+  }
+
+  .filter-buttons .btn {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .action-buttons {
+    order: -1;
+    width: 100%;
+    justify-content: flex-end;
+    margin: 0;
+    top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .mark-btn,
+  .remove-btn {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,120 @@
+/* about.css */
+body {
+  background-color: #f3f3e6;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+.navbar-chillpick {
+  background-color: #ebe8d5;
+  padding: 0.75rem 2rem;
+}
+
+.logo {
+  height: 55px;
+}
+
+.navbar-chillpick .nav-link {
+  color: #3c3c3c !important;
+  font-weight: 600;
+  margin: 0 10px;
+}
+
+.navbar-chillpick .profile-pic {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Mobile tweaks */
+@media (max-width: 991px) {
+  .navbar-chillpick .profile-pic {
+    display: none;
+  }
+}
+
+.footer-chillpick {
+  background-color: #a89884;
+  color: white;
+  padding: 25px 0;
+  text-align: center;
+}
+
+.footer-chillpick a {
+  color: white;
+  margin: 0 20px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.footer-chillpick a:hover {
+  text-decoration: underline;
+}
+
+.footer-chillpick p {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+style > .about-page {
+  max-width: 950px;
+  margin: 2rem auto;
+  padding: 0 20px;
+}
+
+.about-us {
+  background: white;
+  border-radius: 8px;
+  padding: 2.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  color: #6b4f3d;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+h2:first-of-type {
+  margin-top: 0;
+}
+
+p {
+  color: #524e4e;
+  margin-bottom: 1.2rem;
+}
+
+.team-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.team-member {
+  text-align: center;
+  flex: 1;
+  min-width: 180px;
+  max-width: 220px;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.member-name {
+  font-weight: 600;
+  color: #524e4e;
+  margin-bottom: 0.5rem;
+}
+
+.member-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1rem;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

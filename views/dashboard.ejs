@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChillPick | Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+
+  <%- include('partials/header') %>
+
+  <main class="container py-5">
+
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+      <h1>Welcome back!</h1>
+      <p>Here's what we picked for you today</p>
+    </div>
+
+    <div class="row">
+      <!-- Left Column - Recommendations -->
+      <div class="col-lg-8">
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Recommended For You</h2>
+          </div>
+
+          <div class="row p-2">
+            <% if (recommendations && recommendations.length > 0) { %>
+              <% const movies = recommendations.filter(item => item.type && item.type.toLowerCase() === 'movie' && item.id); %>
+              <% const books = recommendations.filter(item => item.type && item.type.toLowerCase() === 'book' && item.id); %>
+              <% if (movies.length === 0 && books.length === 0) { %>
+                <div class="no-recommendations text-center p-5" style="min-height:340px;">
+                  <img src="https://openmoji.org/data/color/svg/1F37F.svg" alt="Popcorn" style="width:100px; height:100px; margin-bottom:18px;"/>
+                  <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 14px;">No recommendations available yet.</div>
+                  <div style="font-size: 1.08rem; color:#888; margin-bottom: 18px;">Start exploring to get personalized picks!</div>
+                  <a href="/discover" class="btn btn-warning btn-lg mt-2 px-4" style="font-size: 1.13rem; font-weight:500;">
+                    <span style="font-size:1.23em; vertical-align:middle;"></span> Start Exploring in Discover
+                  </a>
+                </div>
+              <% } %>
+              <% if (movies.length > 0) { %>
+                <h3 class="section-label mb-0">Movies</h3>
+                <hr class="divider">
+                <div class="rec-pager-wrapper">
+                  <% if (movies.length > 4) { %>
+                    <button type="button" class="btn rec-pager-btn rec-side-btn rec-prev" data-target="movieRecPager" disabled>
+                      <i class="bi bi-chevron-left"></i>
+                    </button>
+                  <% } %>
+                  <div class="row rec-pager flex-grow-1" id="movieRecPager">
+                    <% movies.forEach((item, idx) => { %>
+                      <div class="col-6 col-md-3 mb-3 rec-pager-item" data-page="<%= Math.floor(idx / 4) %>"<% if (Math.floor(idx / 4) !== 0) { %> style="display:none;"<% } %>>
+                        <div class="card media-card" data-history-id="<%= item.id %>" data-history-type="movie">
+                          <a href="/movie_detail/<%= item.id %>" class="media-link">
+                            <div class="poster-wrapper">
+                              <img src="<%= item.posterPath %>" alt="<%= item.title %> Poster" class="media-image">
+                              <span class="completed-badge"><i class="bi bi-check-circle-fill"></i> Watched</span>
+                              <span class="watchlist-badge"><i class="bi bi-bookmark-check-fill"></i> In Watchlist</span>
+                            </div>
+                            <div class="card-body p-2">
+                              <h5 class="card-title"><%= item.title %></h5>
+                              <div class="card-description">
+                                <%= item.type %> ·
+                                <%= Array.isArray(item.genre) ? item.genre.join('-') : item.genre %> ·
+                                <%= item.year %>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    <% }) %>
+                  </div>
+                  <% if (movies.length > 4) { %>
+                    <button type="button" class="btn rec-pager-btn rec-side-btn rec-next" data-target="movieRecPager">
+                      <i class="bi bi-chevron-right"></i>
+                    </button>
+                  <% } %>
+                </div>
+              <% } %>
+              <% if (books.length > 0) { %>
+                <h3 class="section-label mb-0">Books</h3>
+                <hr class="divider">
+                <div class="rec-pager-wrapper">
+                  <% if (books.length > 4) { %>
+                    <button type="button" class="btn rec-pager-btn rec-side-btn rec-prev" data-target="bookRecPager" disabled>
+                      <i class="bi bi-chevron-left"></i>
+                    </button>
+                  <% } %>
+                  <div class="row rec-pager flex-grow-1" id="bookRecPager">
+                    <% books.forEach((item, idx) => { %>
+                      <div class="col-6 col-md-3 mb-3 rec-pager-item" data-page="<%= Math.floor(idx / 4) %>"<% if (Math.floor(idx / 4) !== 0) { %> style="display:none;"<% } %>>
+                        <div class="card media-card" data-history-id="<%= item.id %>" data-history-type="book">
+                          <a href="/book_detail/<%= item.id %>" class="media-link">
+                            <div class="poster-wrapper">
+                              <img src="<%= item.posterPath %>" alt="<%= item.title %> Poster" class="media-image">
+                              <span class="completed-badge"><i class="bi bi-check-circle-fill"></i> Read</span>
+                              <span class="watchlist-badge"><i class="bi bi-bookmark-check-fill"></i> In Watchlist</span>
+                            </div>
+                            <div class="card-body p-2">
+                              <h5 class="card-title"><%= item.title %></h5>
+                              <div class="card-description">
+                                <%= item.type %> ·
+                                <%= item.author || 'Unknown Author' %> ·
+                                <%= item.year %>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    <% }) %>
+                  </div>
+                  <% if (books.length > 4) { %>
+                    <button type="button" class="btn rec-pager-btn rec-side-btn rec-next" data-target="bookRecPager">
+                      <i class="bi bi-chevron-right"></i>
+                    </button>
+                  <% } %>
+                </div>
+              <% } %>
+            <% } else { %>
+              <div class="no-recommendations text-center p-5" style="min-height:340px;">
+                <img src="https://openmoji.org/data/color/svg/1F37F.svg" alt="Popcorn" style="width:100px; height:100px; margin-bottom:18px;"/>
+                <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 14px;">No recommendations available yet.</div>
+                <div style="font-size: 1.08rem; color:#888; margin-bottom: 18px;">Start exploring to get personalized picks!</div>
+                <a href="/discover" class="btn btn-warning btn-lg mt-2 px-4" style="font-size: 1.13rem; font-weight:500;">
+                  <span style="font-size:1.23em; vertical-align:middle;">✨</span> Start Exploring in Discover
+                </a>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Top 3 Recently Added & Activity -->
+      <div class="col-lg-4">
+        <!-- Recently Added Section -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Recently Added</h2>
+            <a href="/watchlist" class="see-all">View all</a>
+          </div>
+
+          <% if (recentlyAdded && recentlyAdded.length > 0) { %>
+            <% recentlyAdded.forEach((item, index) => { %>
+              <div class="small-media-card">
+                <img src="<%= item.posterPath || item.image || '/images/placeholder.jpg' %>" 
+                    alt="<%= item.title %> Poster" 
+                    class="small-media-image"
+                    onerror="this.src='/images/placeholder.jpg'">
+                <div class="small-media-info">
+                  <h5 class="added-title"><%= item.title %></h5>
+                  <div class="added-description">
+                    <%= item.type === 'movie' ? 'Movie' : item.type === 'book' ? 'Book' : item.type %>
+                  </div>
+                  <div class="status-badge plan-to-watch">
+                    Plan to Watch
+                  </div>
+                </div>
+              </div>
+              <% if (index < recentlyAdded.length - 1) { %>
+                <hr class="divider">
+              <% } %>
+            <% }) %>
+          <% } else { %>
+            <div class="d-flex flex-column align-items-center justify-content-center py-4" style="min-height:120px;">
+              <img src="https://openmoji.org/data/color/svg/1F4E6.svg" alt="Box" style="width:40px; height:40px; margin-bottom:9px; opacity:0.75;">
+              <div style="font-size:1.07rem; color:#888; margin-bottom:9px;">Your watchlist is empty!</div>
+              <a href="/discover" class="btn btn-warning btn-sm px-4" style="font-weight:500;">
+                <span style="font-size:1.13em; vertical-align:middle;"></span> Start discovering
+              </a>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Top 3 Recent Activity Section -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Recent Activity</h2>
+          </div>
+
+          <% if (recentActivity && recentActivity.length > 0) { %>
+            <% recentActivity.forEach((activity, index) => { %>
+              <div class="activity-container" style="padding-right: 16px;">
+                <a href="<%= activity.detailUrl %>" class="activity-link">
+                  <div class="activity-card">
+                    <div class="row">
+                      <div class="col-2">
+                        <img src="<%= activity.profilePic %>" alt="profile_pic" class="profile_pic-image"
+                          onerror="if(!this.src.endsWith('/images/profile_pic.png')){this.src='/images/profile_pic.png';}">
+                      </div>
+                      <div class="col-10">
+                        <% if (activity.activityType === 'review') { %>
+                          <div class="Recent-activity-description">
+                            <%= activity.username %> rated 
+                            <em>"<%= activity.itemTitle %>"</em>
+                            <span class="rating-number">(<%= activity.rating %> stars)</span>
+                          </div>
+                          <% if (activity.comment && activity.comment.length > 0) { %>
+                            <div class="activity-comment">
+                              "<%= activity.comment.length > 50 ? activity.comment.substring(0, 50) + '...' : activity.comment %>"
+                            </div>
+                          <% } %>
+                        <% } else if (activity.activityType === 'reply') { %>
+                          <div class="Recent-activity-description">
+                            <%= activity.username %> replied to a review of 
+                            <em>"<%= activity.itemTitle %>"</em>
+                          </div>
+                          <% if (activity.content && activity.content.length > 0) { %>
+                            <div class="activity-comment">
+                              "<%= activity.content.length > 50 ? activity.content.substring(0, 50) + '...' : activity.content %>"
+                            </div>
+                          <% } %>
+                        <% } else if (activity.activityType === 'like') { %>
+                          <div class="Recent-activity-description">
+                            <%= activity.username %> liked a review of 
+                            <em>"<%= activity.itemTitle %>"</em>
+                          </div>
+                        <% } %>
+                        <div class="activity-time"><%= activity.timeAgo %></div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <% if (index < recentActivity.length - 1) { %>
+                  <hr class="divider">
+                <% } %>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <div class="no-activity">
+              <p>No recent activity to show.</p>
+              <small class="text-muted">Reviews, replies, and likes will appear here.</small>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+  <script src="/js/history-badges.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <%- include('partials/footer') %>
+</body>
+</html>
